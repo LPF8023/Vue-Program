@@ -17,5 +17,17 @@ export default {
   [Banner](state, {banner}) {
     state.banner = banner
   },
+  [Home](state, {result}) {
+    const {home} = result
+    state.home = home
+  },
+  [Shiwu](state, {result}) {
+    const {detail} = result
+    state.shiwu = detail
+  },
+  [Types](state, {result}) {
+    const {nav} = result
+    state.types = nav
+  },
 
 }

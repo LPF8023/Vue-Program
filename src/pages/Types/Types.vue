@@ -10,24 +10,34 @@
       <div class="m-cateNavVertWrap">
         <div class="j-cateNavWrap">
           <div class="j-cateNav">
-            <div  class="item" v-for="(item1,index1) in categoryL1List" :key="index1" @click="getIndex(index1)" :class="{active:index === index1 }">{{item1}}</div>
+            <div  class="item" v-for="(item1,index1) in types.categoryL1List" :key="index1" @click="getIndex(index1)" :class="{active:index === index1 }">{{item1.name}}</div>
           </div>
         </div>
       </div>
-      <listItem :index="index"/>
+
+      <!--右边详情物品信息-->
+      <listItem :index="index" :types="types"/>
     </div>
   </div>
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   import ListItem from '../../components/ListItem/ListItem'
 
   export default {
     data () {
       return {
-        categoryL1List: ['推荐专区','秋季专区','新品专区','爆品专区','居家','鞋包配饰','服装','电器','洗护','饮食','餐厨','婴童','文体'],
         index: 0,
       }
+    },
+
+    mounted () {
+      this.$store.dispatch('getTypes')
+    },
+
+    computed: {
+      ...mapState(['types'])
     },
 
     methods: {

@@ -1,5 +1,6 @@
 <template>
   <div class="home_container">
+    <Masker/>
     <!--头部搜索导航区-->
     <div class="head_container">
       <div class="top">
@@ -22,16 +23,12 @@
           <img :src="item.picUrl"/>
         </div>
       </div>
+      <div class="swiper-scrollbar"></div>
     </div>
+    <!--三个保证-->
     <div class="g-grow">
-      <div class="item">
-        <span>网易自营品牌</span>
-      </div>
-      <div class="item">
-        <span>30天无忧退款</span>
-      </div>
-      <div class="item">
-        <span>48小时快速退款</span>
+      <div class="item" v-for="(item, index) in home.policyDescList" :key="index">
+        <span>{{item.desc}}</span>
       </div>
     </div>
     <!--品牌制造直供区-->
@@ -79,47 +76,50 @@
       </header>
       <div class="m-goodGrid">
         <div class="list">
-          <div class="goodGrid-item">
-            <img src="http://yanxuan.nosdn.127.net/f8a1351045e3a4848b81c3036d229c1c.png?imageView&quality=65&thumbnail=330x330" class="title"></img>
-            <div class="name">网易智造低压海盐热敷腰带</div>
-            <div class="newItemDesc">古法热敷，研磨艾绒，专业的身体调理</div>
-            <div class="price">￥199</div>
-          </div>
-          <div class="goodGrid-item">
-            <img src="http://yanxuan.nosdn.127.net/cbbdd7c5622a0eaab31e42247909c959.png?imageView&quality=65&thumbnail=330x330" class="title"></img>
-            <div class="name">海盐</div>
-            <div class="newItemDesc">介绍</div>
-            <div class="price">￥199</div>
-          </div>
-          <div class="goodGrid-item">
-            <img class="title" src="http://yanxuan.nosdn.127.net/5325d6170b0fb885c8f5f1b3528811e2.png?imageView&quality=65&thumbnail=330x330"></img>
-            <div class="name">海盐</div>
-            <div class="newItemDesc">介绍</div>
-            <div class="price">￥199</div>
+          <div class="goodGrid-item" v-for="(item, index) in home.newItemList" :key="index">
+            <img :src="item.listPicUrl" class="title"></img>
+            <div class="name">{{item.name}}</div>
+            <div class="newItemDesc">{{item.simpleDesc}}</div>
+            <div class="price">￥{{item.retailPrice}}</div>
           </div>
         </div>
       </div>
     </div>
-    <!--人气推荐区-->
-    <div class="m-popularItemList">
-      人气推荐区
-    </div>
-    <!--严选限时区-->
-    <div class="data_reactid">
-      严选限时区
-    </div>
     <!--福利社-->
     <div class="m-sale">
-      福利社
+      <img src="http://yanxuan.nosdn.127.net/a3ea2d1108c94c7dece05eddf95f6df5.jpg" alt="">
     </div>
     <!--专题精选-->
     <div class="m-indexFloor">
-      专题精选
+      <div class="hd">
+        <div class="hd-Wrap">
+          <span>专题精选</span>
+          <i class="iconfont icon-right-circle"></i>
+        </div>
+      </div>
     </div>
+
+    <div class="imgWrap">
+      <div class="img-scroll">
+        <div class="imgItem" v-for="(item, index) in home.topicList" :key="index">
+          <img :src="item.itemPicUrl" alt="">
+          <div class="line1">
+            <h4>{{item.title}}</h4>
+            <span>{{item.priceInfo}}元起</span>
+          </div>
+          <div class="desc">{{item.subtitle}}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 返回顶部 -->
+    <goTop/>
+
+    <!-- 居家好物 -->
+    <GoodThing :cateList="home.cateList"/>
+
     <!--底部-->
-    <div class="m-ftWrap">
-      底部
-    </div>
+    <HomeFooter/>
   </div>
 </template>
 
@@ -128,6 +128,11 @@
   import BScroll from 'better-scroll'
   import Swiper from 'swiper'
   import 'swiper/dist/css/swiper.min.css'
+
+  import GoodThing from '../../components/GoodThing/GoodThing'
+  import HomeFooter from '../../components/HomeFooter/HomeFooter'
+  import goTop from '../../components/goTop/goTop'
+  import Masker from '../../components/Masker/Masker'
 
   export default {
 
@@ -146,18 +151,9 @@
       })
 
       this.$store.dispatch('getBanner')
+      this._initSwiper ()
 
-
-      new Swiper('.swiper-container', {
-        loop: true,
-        autoplay:{
-          autoplay: true,
-          delay: 3000
-        },
-        scrollbar: {
-          el: '.swiper-container',
-        },
-      })
+      this.$store.dispatch('getHome')
     },
 
     computed: {
@@ -175,22 +171,52 @@
           scrollX: true,
           scrollY: false,
         })
+        new BScroll('.m-goodGrid', {
+          click: true,
+          scrollX: true,
+          scrollY: false,
+        })
+        new BScroll('.imgWrap', {
+          click: true,
+          scrollX: true,
+          scrollY: false,
+        })
+      },
 
+      // 初始化滑动
+      _initSwiper () {
+        new Swiper('.swiper-container', {
+          loop: true,
+          autoplay: true,
+          scrollbar: {    //滚动条
+            el: '.swiper-scrollbar',
+          },
+        })
       }
-
-
 
     },
 
-    components: {
+    watch: {
+      banner (val) {
+        this.$nextTick(() => {
+          this._initSwiper ()
+        })
+      }
+    },
 
+    components: {
+      GoodThing,
+      HomeFooter,
+      goTop,
+      Masker,
     },
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixins.styl"
-
+body
+  background-color #f4f4f4
   .home_container
     width 100%
     overflow hidden
@@ -221,18 +247,18 @@
           background-color #ededed
           align-items center
           justify-content center
-          width 532px/@rem
-          height 56px/@rem
+          width (532/$rem)
+          height (56/$rem)
           border-radius 0.10667rem
           .search
             display inline-block
             vertical-align middle
             font-size .37333rem
             border-radius .10667rem
-            margin-right 34px
+            margin-right (34/$rem)
           span
             width 70%
-            font-size 24px/@rem
+            font-size (24/$rem)
             color #666666
       .hdScorllX
         width: 100%;
@@ -243,16 +269,16 @@
           display: flex;
           align-items: center;
           text-align center
-          height (60/$rem)
+          padding 0 .4rem
           li
+            height (60/$rem)
             width (70/$rem)
             text-align: center
-            margin 0 0.5rem
-            padding-bottom (12/$rem)
+            line-height .8rem
+            padding 0 .21333rem
             font-size: (.37333*75/$rem)
             white-space nowrap
             &.active
-              padding-bottom (12/$rem)
               border-bottom: 3px solid #b4282d
               color: #b4282d
     .swiper-container
@@ -263,6 +289,9 @@
           img
             width 100%
             vertical-align middle
+      .swiper-scrollbar
+        bottom .4rem
+        width 100%
     .g-grow
       margin-bottom 12px
       background #fff
@@ -286,8 +315,7 @@
 
     .m-indexFloor
       width 100%
-      height 586px
-      margin-bottom 22px
+      margin-bottom .26667rem
       background #ffffff
       .hd
         display flex
@@ -296,7 +324,7 @@
         justify-content center
         height 110px
         font-size .42667rem
-        .icon-right-circle
+        .iconfont
           font-size .42667rem
       .hd-itemWrap
         margin 0 15px
@@ -371,10 +399,12 @@
         width 100%
         height 6.4rem
         background-color #eee
+        display flex
         .list
           height 414px
-          overflow hidden
           display flex
+          flex-flow nowrap
+          align-items center
           .goodGrid-item
             width 3.73333rem
             margin-left .4rem
@@ -389,7 +419,9 @@
               line-height .45333rem
               white-space: nowrap;
               text-overflow: ellipsis;
-              overflow: hidden;
+              overflow: hidden
+            .price
+              color red
             .newItemDesc
               display: block;
               margin-bottom: .18667rem;
@@ -403,5 +435,51 @@
             .price
               padding 0 .13333rem
               font-size .37333rem
+
+    .m-sale
+      margin-top .2*75/@rem
+      img
+        width 100%
+    .imgWrap
+      display flex
+      .img-scroll
+        margin-left .3rem
+        display flex
+        justify-content space-between
+        align-items center
+        .imgItem
+          margin-right (20.8444/$rem)
+          width 7.66667rem
+          margin-bottom .21333rem
+          border-radius (8/$rem)
+          overflow hidden
+          float left
+          img
+            width 100%
+            margin-bottom .1rem
+          .line1
+            margin-bottom .1rem
+            overflow hidden
+            height 1.473rem
+            line-height 1.473rem
+            h4
+              float left
+              font-size .37333rem
+              width 5.46667rem
+              white-space nowrap
+              overflow hidden
+              text-overflow ellipsis
+              font-weight bold
+            span
+              float right
+              font-size .37333rem
+              color #b4282d
+          .desc
+            width 7.66667rem
+            font-size .32rem
+            white-space nowrap
+            overflow hidden
+            text-overflow ellipsis
+            color #7F7F7F
 
 </style>

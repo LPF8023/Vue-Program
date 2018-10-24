@@ -1,16 +1,20 @@
 <template>
-  <div class="m-subCateList">
+  <div class="m-subCateList" v-if="types.categoryL1List">
+    <div class="banner">
+      <img :src="types.categoryL1List[index].bannerUrl">
+    </div>
     <div class="cateList">
       <div class="hd">
         <div class="text">
-          <span>123</span>
+          <span>{{types.categoryL1List[index].name}}</span>
           <span>分类</span>
         </div>
       </div>
       <div class="list">
-        <div class="cateItem" v-for="(itemCate,indexCate) in categoryL1List" :key="indexCate">
+        <div class="cateItem" v-for="(itemCate,indexCate) in types.categoryL1List[index].subCateList" :key="indexCate">
           <div class="cateImgWrapper" >
-            <div class="name">{{itemCate}}</div>
+            <img :src="itemCate.wapBannerUrl" alt="">
+            <div class="name">{{itemCate.name}}</div>
           </div>
         </div>
       </div>
@@ -22,12 +26,13 @@
   export default {
     data () {
       return {
-        categoryL1List: ['推荐专区','秋季专区','新品专区','爆品专区','居家','鞋包配饰','服装','电器','洗护','饮食','餐厨','婴童','文体'],
+
       }
     },
 
     props: {
-      index: Number
+      index: Number,
+      types: Object
     }
 
 
@@ -44,6 +49,14 @@
     right: 0;
     margin-left: (2.16*75/$rem)
     padding: (.4*75/$rem) (.4*75/$rem) (.28*75/$rem)
+    .banner
+      position: relative;
+      width: 100%;
+      height: 2.56rem;
+      display: table;
+      img
+        width: 100%;
+        border-radius: 4px;
     .cateList
       .hd
         height: (1.44*75/$rem)

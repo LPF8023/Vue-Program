@@ -29,7 +29,26 @@ export default {
     commit(Banner, {banner:result.focusList})
     cb && cb()
   },
+  // 获取home信息
+  async getHome ({commit}, cb) {
+    const result = await reqHome()
+    commit(Home, {result})
+    cb && cb()
+  },
 
+  // 获取shiwu信息
+  async getShiwu ({commit}, cb) {
+    const result = await reqShiwu()
+    commit(Shiwu, {result})
+    cb && cb()
+  },
+
+  // 获取types信息
+  async getTypes ({commit}, cb) {
+    const result = await reqTypes()
+    commit(Types, {result})
+    cb && cb()
+  },
 
 
 
