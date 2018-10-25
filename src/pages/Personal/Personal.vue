@@ -8,11 +8,11 @@
           <img src="//yanxuan.nosdn.127.net/bd139d2c42205f749cd4ab78fa3d6c60.png" alt="">
         </div>
         <div class="btnWrap">
-          <div class="button-block" @click="goLogoin(true)">
+          <div class="button-block" @click="phoneLogoin(true)">
             <i class="loginPhone"></i>
             <span>手机号码登录</span>
           </div>
-          <div class="button-ghostRed" @click="goLogoin(false)">
+          <div class="button-ghostRed" @click="phoneLogoin(false)">
             <i class="loginMail"></i>
             <span>邮箱账号登录</span>
           </div>
@@ -53,15 +53,15 @@
   export default {
    data () {
      return {
-       longinWay: null
+
      }
    },
 
     methods: {
-      goLogoin (loginWay1) {
-        this.longinWay = loginWay1;
+      phoneLogoin (phoneLogoin) {
+        //Vue.set(this.loginWay, 'phoneLogoin')
         this.$router.replace('/login');
-
+        this.$store.dispatch('setLoginWay',phoneLogoin)
       }
     },
 

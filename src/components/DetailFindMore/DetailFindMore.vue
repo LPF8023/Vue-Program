@@ -7,7 +7,7 @@
       <div class="wrap">
         <div class="content" v-for="(item,index) in findLess">
           <div class="imgContainer">
-            <img :src="item.itemPicUrl" alt="">
+            <img v-lazy="item.itemPicUrl" alt="">
             <!--<div class="right" v-if="item.picList">
               <div class="img" v-for="(item,index) in item.picList">
                 <img :src="item" alt="">

@@ -50,7 +50,10 @@ export default {
     cb && cb()
   },
 
-
+  // 设置loginWay
+  setLoginWay({commit},phoneLogoin) {
+    commit(LoginWay,{phoneLogoin})
+  }
 
 
 

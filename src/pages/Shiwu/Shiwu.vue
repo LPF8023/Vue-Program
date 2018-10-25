@@ -5,7 +5,7 @@
       <div class="swiper-container" v-if="shiwu.banner">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="(item, index) in shiwu.banner" :key="index">
-            <img :src="item.picUrl">
+            <img v-lazy="item.picUrl">
             <div class="content">
               <div class="subTitle">{{item.subTitle}}</div>
               <div class="title">{{item.title}}</div>

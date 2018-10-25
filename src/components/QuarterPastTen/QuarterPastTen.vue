@@ -14,7 +14,7 @@
               <div class="inner">
                 <div class="avatars">
                   <div class="avatar" v-for="(avatarItem,index) in item.participantAvatar" :key="index">
-                    <img :src="avatarItem" alt="">
+                    <img v-lazy="avatarItem" alt="">
                   </div>
                   <div class="avatar1">
                     <div class="doc"></div>

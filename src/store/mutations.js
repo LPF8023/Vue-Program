@@ -29,5 +29,8 @@ export default {
     const {nav} = result
     state.types = nav
   },
+  [LoginWay](state, {phoneLogoin}) {
+    state.loginWay = phoneLogoin
+  },
 
 }

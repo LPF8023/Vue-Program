@@ -8,7 +8,7 @@
           <div class="author-container">
             <div class="author">
               <div class="avatar">
-                <img :src="detail.yxLook.avatar" alt="">
+                <img v-lazy="detail.yxLook.avatar" alt="">
               </div>
               <div class="nickname">{{detail.yxLook.nickname}}</div>
             </div>

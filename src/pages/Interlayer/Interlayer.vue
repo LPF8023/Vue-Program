@@ -19,6 +19,8 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+  @import "../../common/stylus/mixins.styl"
+
   .backWapBtn
     width: 3.38667rem;
     height: .4rem;
@@ -26,7 +28,7 @@
     top: 3.08rem;
     position: absolute;
     display: block;
-    font-size: 24px;
+    font-size: (24/$rem)
     line-height: 1.5
   .g-bd
     max-width: 10rem;

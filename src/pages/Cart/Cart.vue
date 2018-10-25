@@ -37,7 +37,6 @@
         </div>
       </div>
     </div>
-    <FooterGuide/>
   </div>
 </template>
 

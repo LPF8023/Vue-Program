@@ -4,5 +4,5 @@ export default {
   home: {},    // home数据
   shiwu: {},  // shiwu页数据
   types: {},  // types分类数据
-  longinWay: null  //登录方式
+  loginWay: null  //登录方式 true是手机号码登录
 }

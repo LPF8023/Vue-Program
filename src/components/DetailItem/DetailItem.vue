@@ -41,7 +41,7 @@
           </div>
           <div class="minorPic">
             <div class="imgContainer">
-              <img :src="detail.recommendTwo.picUrl" alt="">
+              <img v-lazy="detail.recommendTwo.picUrl" alt="">
               <div class="topicTag">
                 <div class="m-exploreTag">{{detail.recommendTwo.typeName}}</div>
               </div>

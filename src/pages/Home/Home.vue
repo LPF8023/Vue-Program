@@ -20,7 +20,7 @@
     <div class="swiper-container" v-if="banner.length > 0">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in banner" :key="index">
-          <img :src="item.picUrl"/>
+          <img v-lazy="item.picUrl"/>
         </div>
       </div>
       <div class="swiper-scrollbar"></div>
@@ -77,7 +77,7 @@
       <div class="m-goodGrid">
         <div class="list">
           <div class="goodGrid-item" v-for="(item, index) in home.newItemList" :key="index">
-            <img :src="item.listPicUrl" class="title"></img>
+            <img v-lazy="item.listPicUrl" class="title"></img>
             <div class="name">{{item.name}}</div>
             <div class="newItemDesc">{{item.simpleDesc}}</div>
             <div class="price">￥{{item.retailPrice}}</div>
@@ -102,7 +102,7 @@
     <div class="imgWrap">
       <div class="img-scroll">
         <div class="imgItem" v-for="(item, index) in home.topicList" :key="index">
-          <img :src="item.itemPicUrl" alt="">
+          <img v-lazy="item.itemPicUrl" alt="">
           <div class="line1">
             <h4>{{item.title}}</h4>
             <span>{{item.priceInfo}}元起</span>
@@ -150,8 +150,12 @@
         })
       })
 
-      this.$store.dispatch('getBanner')
-      this._initSwiper ()
+      this.$store.dispatch('getBanner',() => {
+        this.$nextTick(() => {
+          this._initSwiper ()
+        })
+      })
+
 
       this.$store.dispatch('getHome')
     },
@@ -288,7 +292,6 @@ body
         .swiper-slide
           img
             width 100%
-            vertical-align middle
       .swiper-scrollbar
         bottom .4rem
         width 100%
@@ -365,8 +368,6 @@ body
             font-size .37333rem
             line-height .45333rem
 
-
-
     .m-newItems
       margin-bottom 20px
       background-color #eee
@@ -375,7 +376,6 @@ body
       .newItemsWrap
         width 100%
         height 260px
-        margin-bottom 32px
         display flex
         flex-direction column
         align-items center
@@ -401,7 +401,6 @@ body
         background-color #eee
         display flex
         .list
-          height 414px
           display flex
           flex-flow nowrap
           align-items center
