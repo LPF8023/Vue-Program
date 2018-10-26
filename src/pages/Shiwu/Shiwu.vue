@@ -32,6 +32,7 @@
 
 <script>
   import Swiper from 'swiper'
+  import 'swiper/dist/css/swiper.min.css'
 
   import ShiwuHeader from '../../components/ShiwuHeader/ShiwuHeader'
   import DetailScroll from '../../components/DetailScroll/DetailScroll'
@@ -59,6 +60,8 @@
           spaceBetween: 30,
           slidesPerView: 1.15,  //网格格栅 --> 设置slider容器能够同时显示的slides数量，设置数字，可为小数
           centeredSlides: true,   //设定为true时，active slide会居中，而不是默认状态下的居左。
+          // observer: true, // 修改swiper自己或子元素时，自动初始化swiper
+          // observeParents: true,   // 修改swiper父元素时，自动初始化swiper
           autoplay: {
             autoplay:true,
             delay: 3000
@@ -100,12 +103,16 @@
     background: #F4F4F4;
     padding-bottom: 0.5rem
   .swiper-container
+    height (468/$rem)
     .swiper-wrapper
+      height (468/$rem)
       margin-top: 1.4rem
       .swiper-slide
+        height (468/$rem)
+        position relative
         img
+          height 100%
           width: 100%;
-          position: relative;
         .content
           position: absolute;
           top: 0;

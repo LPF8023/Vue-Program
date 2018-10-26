@@ -25,6 +25,7 @@
       </div>
       <div class="swiper-scrollbar"></div>
     </div>
+
     <!--三个保证-->
     <div class="g-grow">
       <div class="item" v-for="(item, index) in home.policyDescList" :key="index">
@@ -151,9 +152,7 @@
       })
 
       this.$store.dispatch('getBanner',() => {
-        this.$nextTick(() => {
           this._initSwiper ()
-        })
       })
 
 
@@ -191,10 +190,17 @@
       _initSwiper () {
         new Swiper('.swiper-container', {
           loop: true,
-          autoplay: true,
-          scrollbar: {    //滚动条
-            el: '.swiper-scrollbar',
+          observer: true, // 修改swiper自己或子元素时，自动初始化swiper
+          observeParents: true,   // 修改swiper父元素时，自动初始化swiper
+          autoplay: {
+            autoplay:true,
+            delay: 3000
           },
+          /*scrollbar: {    //滚动条
+            el: '.swiper-scrollbar',
+            hide: true, //会自动隐藏
+            dragSize: 50, // 滚动条尺寸
+          },*/
         })
       }
 
@@ -203,7 +209,7 @@
     watch: {
       banner (val) {
         this.$nextTick(() => {
-          this._initSwiper ()
+          this._initSwiper ();
         })
       }
     },
@@ -286,15 +292,20 @@ body
               border-bottom: 3px solid #b4282d
               color: #b4282d
     .swiper-container
-      margin-top 146px
+      margin-top (148/$rem)
       background #7e8c8d
+      height (400/$rem)
+      overflow visible
       .swiper-wrapper
+        height (400/$rem)
         .swiper-slide
+          height (400/$rem)
           img
             width 100%
+            height 100%
       .swiper-scrollbar
+        left 0
         bottom .4rem
-        width 100%
     .g-grow
       margin-bottom 12px
       background #fff
